@@ -440,7 +440,6 @@ def generate_video(
     max_frames,
     RIFLEx_setting,
     state
-    progress=gr.Progress() #track_tqdm= True
 
 ):
     
@@ -773,7 +772,7 @@ try:
     max_frames,
     RIFLEx_setting,
     state,
-    progress=gr.Progress()
+
     )
 except Exception as e:
     print(f"An error occurred: {e}")
