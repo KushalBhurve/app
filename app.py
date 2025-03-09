@@ -449,13 +449,13 @@ def generate_video(
 
 
     if wan_model == None:
-        raise gr.Error("Unable to generate a Video while a new configuration is being applied.")
+        print("Unable to generate a Video while a new configuration is being applied.")
     if attention_mode == "auto":
         attn = get_auto_attention()
     elif attention_mode in attention_modes_supported:
         attn = attention_mode
     else:
-        raise gr.Error(f"You have selected attention mode '{attention_mode}'. However it is not installed on your system. You should either install it or switch to the default 'sdpa' attention.")
+        print(f"You have selected attention mode '{attention_mode}'. However it is not installed on your system. You should either install it or switch to the default 'sdpa' attention.")
 
     width, height = resolution.split("x")
     width, height = int(width), int(height)
@@ -463,16 +463,16 @@ def generate_video(
 
     if use_image2video:
         if "480p" in  transformer_filename_i2v and width * height > 848*480:
-            raise gr.Error("You must use the 720P image to video model to generate videos with a resolution equivalent to 720P")
+            print("You must use the 720P image to video model to generate videos with a resolution equivalent to 720P")
 
         resolution = str(width) + "*" + str(height)  
         if  resolution not in ['720*1280', '1280*720', '480*832', '832*480']:
-            raise gr.Error(f"Resolution {resolution} not supported by image 2 video")
+            print(f"Resolution {resolution} not supported by image 2 video")
 
 
     else:
         if "1.3B" in  transformer_filename_t2v and width * height > 848*480:
-            raise gr.Error("You must use the 14B text to video model to generate videos with a resolution equivalent to 720P")
+            print("You must use the 14B text to video model to generate videos with a resolution equivalent to 720P")
 
     
     offload.shared_state["_attention"] =  attn
@@ -512,7 +512,7 @@ def generate_video(
                 image_to_continue = [image_to_continue]
             if len(prompts) >= len(image_to_continue):
                 if len(prompts) % len(image_to_continue) !=0:
-                    raise gr.Error("If there are more text prompts than input images the number of text prompts should be dividable by the number of images")
+                    print("If there are more text prompts than input images the number of text prompts should be dividable by the number of images")
                 rep = len(prompts) // len(image_to_continue)
                 new_image_to_continue = []
                 for i, _ in enumerate(prompts):
@@ -520,7 +520,7 @@ def generate_video(
                 image_to_continue = new_image_to_continue 
             else: 
                 if len(image_to_continue) % len(prompts)  !=0:
-                    raise gr.Error("If there are more input images than text prompts the number of images should be dividable by the number of text prompts")
+                    print("If there are more input images than text prompts the number of images should be dividable by the number of text prompts")
                 rep = len(image_to_continue) // len(prompts)  
                 new_prompts = []
                 for i, _ in enumerate(image_to_continue):
@@ -556,13 +556,13 @@ def generate_video(
                     slist = []
                     for smult in multlist:
                         if not is_float(smult):                
-                            raise gr.Error(f"Lora sub value no {i+1} ({smult}) in Multiplier definition '{multlist}' is invalid")
+                            print(f"Lora sub value no {i+1} ({smult}) in Multiplier definition '{multlist}' is invalid")
                         slist.append(float(smult))
                     slist = expand_slist(slist, num_inference_steps )
                     list_mult_choices_nums.append(slist)
                 else:
                     if not is_float(mult):                
-                        raise gr.Error(f"Lora Multiplier no {i+1} ({mult}) is invalid")
+                        print(f"Lora Multiplier no {i+1} ({mult}) is invalid")
                     list_mult_choices_nums.append(float(mult))
         if len(list_mult_choices_nums ) < len(loras_choices):
             list_mult_choices_nums  += [1.0] * ( len(loras_choices) - len(list_mult_choices_nums ) )
@@ -677,9 +677,9 @@ def generate_video(
                             VRAM_crash = True
                             break
                 if VRAM_crash:
-                    raise gr.Error("The generation of the video has encountered an error: it is likely that you have unsufficient VRAM and you should therefore reduce the video resolution or its number of frames.")
+                    print("The generation of the video has encountered an error: it is likely that you have unsufficient VRAM and you should therefore reduce the video resolution or its number of frames.")
                 else:
-                    raise gr.Error(f"The generation of the video has encountered an error, please check your terminal for more information. '{s}'")
+                    print(f"The generation of the video has encountered an error, please check your terminal for more information. '{s}'")
 
             if trans.enable_teacache:
                 trans.previous_residual_uncond = None
