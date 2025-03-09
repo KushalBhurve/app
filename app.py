@@ -729,28 +729,28 @@ def generate_video(
 new_preset_msg = "Enter a Name for a Lora Preset or Choose One Above"
 
 
-if __name__ == "__main__":
-    prompt = "Make the cat remove the goggles and dance"
-    negative_prompt=""
-    resolution="832x480"
-    video_length = 81
-    seed = -1
-    num_inference_steps=30
-    guidance_scale=5.0
-    flow_shift=3.0
-    embedded_guidance_scale=6.0
-    repeat_generation=1.0
-    tea_cache=0
-    tea_cache_start_step_perc= 20
-    loras_choices=default_loras_choices
-    loras_mult_choices=default_loras_multis_str
-    image_path = "./examples/i2v_input.JPG"
-    image_to_continue = Image.open(image_path)
-    video_to_continue=None
-    max_frames=9
-    RIFLEx_setting=0
 
-    generate_video(
+prompt = "Make the cat remove the goggles and dance"
+negative_prompt=""
+resolution="832x480"
+video_length = 81
+seed = -1
+num_inference_steps=30
+guidance_scale=5.0
+flow_shift=3.0
+embedded_guidance_scale=6.0
+repeat_generation=1.0
+tea_cache=0
+tea_cache_start_step_perc= 20
+loras_choices=default_loras_choices
+loras_mult_choices=default_loras_multis_str
+image_path = "./examples/i2v_input.JPG"
+image_to_continue = Image.open(image_path)
+video_to_continue=None
+max_frames=9
+RIFLEx_setting=0
+
+generate_video(
     prompt,
     negative_prompt,    
     resolution,
@@ -770,4 +770,4 @@ if __name__ == "__main__":
     max_frames,
     RIFLEx_setting,
     progress=gr.Progress()
-    )
+)
