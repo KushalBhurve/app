@@ -337,6 +337,12 @@ def setup_loras(pipe,  lora_dir, lora_preselected_preset, split_linear_modules_m
 
     return loras, loras_names, default_loras_choices, default_loras_multis_str, default_lora_preset, loras_presets
 
+def get_auto_attention():
+    for attn in ["sage2","sage","sdpa"]:
+        if attn in attention_modes_supported:
+            return attn
+    return "sdpa"
+
 
 def load_i2v_model(model_filename, value):
 
@@ -363,7 +369,7 @@ def load_i2v_model(model_filename, value):
 def load_models(i2v,  lora_dir,  lora_preselected_preset ):
     download_models(transformer_filename_i2v if i2v else transformer_filename_t2v, text_encoder_filename) 
 
-    wan_model, pipe = load_i2v_model(transformer_filename_i2v,"720P" if res720P else "480P")
+    wan_model, pipe = load_i2v_model(transformer_filename_i2v,"480P")
 
     kwargs = { "extraModelsToQuantize": None}
     if profile == 2 or profile == 4:
@@ -738,7 +744,7 @@ if __name__ == "__main__":
     tea_cache_start_step_perc= 20
     loras_choices=default_loras_choices
     loras_mult_choices=default_loras_multis_str
-    image_path = ".\examples\i2v_input.JPG"
+    image_path = "./examples/i2v_input.JPG"
     image_to_continue = Image.open(image_path)
     video_to_continue=False
     max_frames=9
