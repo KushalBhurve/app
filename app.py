@@ -439,6 +439,7 @@ def generate_video(
     video_to_continue,
     max_frames,
     RIFLEx_setting,
+    state
     progress=gr.Progress() #track_tqdm= True
 
 ):
@@ -749,6 +750,7 @@ image_to_continue = Image.open(image_path)
 video_to_continue=None
 max_frames=9
 RIFLEx_setting=0
+state = gr.State({})
 
 generate_video(
     prompt,
@@ -769,5 +771,6 @@ generate_video(
     video_to_continue,
     max_frames,
     RIFLEx_setting,
+    state,
     progress=gr.Progress()
 )
