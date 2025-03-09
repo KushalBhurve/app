@@ -752,7 +752,8 @@ max_frames=9
 RIFLEx_setting=0
 state = gr.State({})
 
-generate_video(
+try:
+    generate_video(
     prompt,
     negative_prompt,    
     resolution,
@@ -773,4 +774,6 @@ generate_video(
     RIFLEx_setting,
     state,
     progress=gr.Progress()
-)
+    )
+except Exception as e:
+    print(f"An error occurred: {e}")
