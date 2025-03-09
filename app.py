@@ -746,7 +746,7 @@ if __name__ == "__main__":
     loras_mult_choices=default_loras_multis_str
     image_path = "./examples/i2v_input.JPG"
     image_to_continue = Image.open(image_path)
-    video_to_continue=False
+    video_to_continue=None
     max_frames=9
     RIFLEx_setting=0
 
